@@ -7,22 +7,45 @@
   {% endif %}
 {% endblock %}
 
+
 {% block content %}
-  {% for post in posts %}
-    <article class="post">
-      <header>
-        <div>
-          <h1>{{ post['title'] }}</h1>
-          <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+<div class="container">
+  <div class="col-10 m-auto bg-secondary">
+    Väder
+  </div>
+  <div class="col-10 m-auto bg-dark">
+
+
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Spira Blommor</h5>
+            <p>Välkommen</p>
+            
+          </div>
         </div>
-        {% if g.user['id'] == post['author_id'] %}
-          <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
-        {% endif %}
-      </header>
-      <p class="body">{{ post['body'] }}</p>
-    </article>
-    {% if not loop.last %}
-      <hr>
-    {% endif %}
+        {% for post in posts %}
+        <div class="carousel-item">
+          <img src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg" class="d-block w-100" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{ post['title'] }}</h5>
+            <p>{{ post['body'] }}</p>
+            <small>by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</small>
+          </div>
+        </div>
   {% endfor %}
+        
+      </div>
+    </div>
+
+  
+
+
+</div>
+<div class="col-10 m-auto bg-primary align-self-end">
+  Rumsbokning
+</div>
+</div>
 {% endblock %}

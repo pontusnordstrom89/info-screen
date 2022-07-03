@@ -1,6 +1,9 @@
 import os
-
-from flask import Flask
+import urllib.request
+from flask import Flask, flash, request, redirect, url_for, jsonify
+from werkzeug.utils import secure_filename
+UPLOAD_FOLDER = os.getcwd() + '/flaskr/static/img/uploads'
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 
 def create_app(test_config=None):
@@ -10,6 +13,9 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
     )
+
+    print(UPLOAD_FOLDER)
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -24,7 +30,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-
     from . import db
     db.init_app(app)
 
@@ -35,9 +40,40 @@ def create_app(test_config=None):
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')
 
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'Hello, World!'
+    def allowed_file(filename):
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+    @app.route('/upload-file', methods=['POST'])
+    def upload_file():
+
+        if request.method == 'POST':
+            # check if the post request has the file part
+            if 'croppedImage' not in request.files:
+                print('nocrop')
+                flash('No file part')
+                return redirect(request.url)
+
+            print('no error')
+            file = request.files['croppedImage']
+            print('file requested')
+            # If the user does not select a file, the browser submits an
+            # empty file without a filename.
+            if file.filename == '':
+                print('No selected file')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                print('saving file')
+                filename = secure_filename(file.filename)
+                file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+                resp = jsonify({'message': 'Files successfully uploaded'})
+                resp.status_code = 201
+                return resp
+
+        return 'Something'
+        
+
 
     return app

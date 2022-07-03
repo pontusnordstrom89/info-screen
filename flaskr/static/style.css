@@ -1,1 +1,37 @@
-.info-body {max-width: 1080px;}
+@font-face {
+    font-family: infoText;
+    src: url(font/Gulzar-Regular.ttf);
+}
+
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/* Ensure the size of the image fit the container perfectly */
+img {
+    display: block;
+
+    /* This rule is very important, please don't ignore this */
+    max-width: 100%;
+}
+
+.info-body {
+    max-width: 1080px;
+}
+
+
+.spira-color {
+    color: #3d6638;
+
+    text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2),
+        0px -5px 35px rgba(255, 255, 255, 0.3);
+
+}
+
+.preview {
+    overflow: hidden;
+    width: 250px;
+    height: 250px;
+    margin: 10px;
+    border: 2px solid rgb(20, 149, 235);
+}

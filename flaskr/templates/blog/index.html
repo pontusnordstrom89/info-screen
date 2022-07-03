@@ -1,37 +1,32 @@
 {% extends 'base.html' %}
 
-{% block header %}
-  <h1>{% block title %}Posts{% endblock %}</h1>
-  {% if g.user %}
-    <a class="action" href="{{ url_for('blog.create') }}">New</a>
-  {% endif %}
-{% endblock %}
-
-
 {% block content %}
-<div class="container">
-  <div class="col-10 m-auto bg-secondary row d-flex justify-content-between text-center">
-    <div class="col-4">Spira</div>
-    <div class="col-4" id="clock"></div>
-    <div class="col-4" id="weather">Väder</div>
+<div>
+  <div class="col m-auto row d-flex justify-content-between text-center spira-color">
+    <div class="col-4"><img class="img-fluid" src="../../static/img/spira-logo-normal.png" alt="Spira logo"></div>
+    <div class="col-4 text-center">
+      <h1 class="mt-5" id="clock"></h1>
+      <h4 id="date"></h4>
+    </div>
+    <div class="col-4 text-center"><img class="m-auto" id="weatherIMG" height="100" src="../../static/img/default/png/100/01d.png" alt="weather img"><h3 class="m-0" id="weather"></h3></div>
+    
   </div>
   
-  <div class="col-10 m-auto bg-dark">
+  <div class="col m-auto ">
 
 
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-item active" data-bs-interval="10000">
+          <img src="../../static/img/uploads/1656837488520.jpg" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h5>Spira Blommor</h5>
             <p>Välkommen</p>
-            
           </div>
         </div>
         {% for post in posts %}
-        <div class="carousel-item">
-          <img src="https://cdn.pixabay.com/photo/2015/04/19/08/32/marguerite-729510__340.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-item" data-bs-interval="10000">
+          <img src="../../static/img/uploads/{{ post['img_path'] }}" class="d-block w-100" alt="...">
           <div class="carousel-caption d-none d-md-block">
             <h5>{{ post['title'] }}</h5>
             <p>{{ post['body'] }}</p>
@@ -47,7 +42,7 @@
 
 
 </div>
-<div class="col-10 m-auto bg-primary align-self-end">
+<div class="col m-auto bg-primary align-self-end">
   Rumsbokning
 </div>
 </div>

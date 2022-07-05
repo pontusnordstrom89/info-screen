@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Edit "{{ post['title'] }}"{% endblock %}</h1>
+  <h1>Uppdatera</h1>
 {% endblock %}
 
 {% block content %}
@@ -11,7 +11,13 @@
       value="{{ request.form['title'] or post['title'] }}" required>
     <label for="body">Body</label>
     <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
-    <input type="submit" value="Save">
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" name="active" value="{{post['active']}}" id="active" {{ "checked" if 1 else "" }}>
+      <label class="form-check-label" for="active">
+        Aktiv om ifylld
+      </label>
+    </div>
+    <input type="submit" value="Spara">
   </form>
   <hr>
   <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>Översikt</h1>
+{% endblock %}
+
+
+{% block content %}
+<div class="col m-auto row d-flex justify-content-between text-center spira-color border-bottom">
+    <div class="col-4"><a class="navbar-brand" href="#">
+            <img src="../../static/img/spira-logo-normal.png" alt="Spira logo" height="100">
+        </a></div>
+
+    <div class="col-4 text-center">
+        <h1 class="mt-5">Översikt</h1>
+        <h4 id="date"></h4>
+    </div>
+
+    <nav class="col-4 nav d-block">
+        {% if g.user %}
+        <p>Inloggad som: {{ g.user['username'] }}</p>
+        <a class="btn btn-primary" href="{{ url_for('blog.create') }}">Skapa post</a>
+        <a class="btn btn-primary" href="{{ url_for('blog.overview') }}">Översikt</a>
+        <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
+        {% else %}
+        <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Registrera användare</a>
+        <a class="btn btn-success" href="{{ url_for('auth.login') }}">Logga In</a>
+        {% endif %}
+    </nav>
+
+</div>
+<div class="container row m-auto">
+    {% for post in posts %}
+    <div class="col-lg-4">
+        <div class="carousel-item active border border-5 {{ 'border-success' if post['active'] else 'border-danger' }}">
+            <img src="../../static/img/uploads/{{ post['img_path'] }}" class="d-block w-100" id="changedFile" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>{{ post['title'] }}</h5>
+                <p>{{ post['body'] }}</p>
+                <small>by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</small>
+                <a class="btn btn-success btn-sm" href="{{ url_for('blog.update', id=post['id']) }}">Ändra</a>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
+
+{% endblock %}

@@ -14,5 +14,6 @@ CREATE TABLE post (
   title TEXT NOT NULL,
   body TEXT NOT NULL,
   img_path TEXT NOT NULL,
+  active BOOLEAN NOT NULL,
   FOREIGN KEY (author_id) REFERENCES user (id)
 );

@@ -5,6 +5,7 @@
 
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    overflow: hidden;
 }
 
 /* Ensure the size of the image fit the container perfectly */
@@ -34,4 +35,35 @@ img {
     height: 250px;
     margin: 10px;
     border: 2px solid rgb(20, 149, 235);
+}
+
+#full-screen {
+    position: relative;
+}
+
+#video-frame {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    display: none;
+}
+
+#preview-background {
+    background-color: black;
+    opacity: 0.6;
+
+}
+
+#previewTitle {
+    opacity: 1;
+    color: white;
+    text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2),
+        0px -5px 35px rgba(255, 255, 255, 0.3);
+}
+
+#previewBody {
+    opacity: 1;
+    color: white;
+    text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2),
+        0px -5px 35px rgba(255, 255, 255, 0.3);
 }

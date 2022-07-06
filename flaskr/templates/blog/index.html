@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
+<div id="full-screen">
   <div class="col m-auto row d-flex justify-content-between text-center spira-color">
     <div class="col-4"><img class="img-fluid" src="../../static/img/spira-logo-normal.png" alt="Spira logo"></div>
     <div class="col-4 text-center">
       <h1 class="mt-5" id="clock"></h1>
       <h4 id="date"></h4>
     </div>
-    <div class="col-4 text-center"><img class="m-auto" id="weatherIMG" height="100" src="../../static/img/default/png/100/01d.png" alt="weather img"><h3 class="m-0" id="weather"></h3>
+    <div class="col-4 text-center"><img class="m-auto" id="weatherIMG" height="100"
+        src="../../static/img/default/png/100/01d.png" alt="weather img">
+      <h3 class="m-0" id="weather"></h3>
       {% if g.user %}
       <p>Inloggad som: {{ g.user['username'] }}</p>
       <a class="btn btn-primary" href="{{ url_for('blog.create') }}">Skapa post</a>
@@ -16,9 +18,9 @@
       <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
       {% endif %}
     </div>
-    
+
   </div>
-  
+
   <div class="col m-auto ">
 
 
@@ -40,17 +42,23 @@
             <small>by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</small>
           </div>
         </div>
-  {% endfor %}
-        
+        {% endfor %}
+
       </div>
     </div>
 
-  
 
 
-</div>
-<div class="col m-auto bg-primary align-self-end">
-  Rumsbokning
-</div>
+
+  </div>
+  <div class="col m-auto bg-primary align-self-end">
+    Rumsbokning
+  </div>
+
+
+  <video width="100%" muted id="video-frame">
+    <source src="../../static/mov/Spira-info-reel.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 </div>
 {% endblock %}

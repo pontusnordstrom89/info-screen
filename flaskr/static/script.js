@@ -5,15 +5,10 @@ $(document).ready(function () {
     startTime()
     getWeather();
     getDate();
-    playMovie();
+    //playMovie();
 
+    
 });
-
-
-
-
-
-
 
 
 /**
@@ -113,8 +108,8 @@ function playMovie() {
         video.style.display = "none";
     }
 
-    // Sätt timeout, spela videon igen om 120.000ms = 2 min
-    setTimeout(playMovie, 120000);
+    // Sätt timeout, spela videon igen om 180.000ms = 3 min
+    setTimeout(playMovie, 180000);
     
 }
 
@@ -215,7 +210,6 @@ $("#crop").click(function () {
 // Efter varje tangenttryck uppdatera titeltexten i förhansgranskning
 $('#title').on('keyup', function() {
     let titelVal = $('#title').val()
-    console.log(titelVal)
     $('#previewTitle').text(titelVal)
 })
 
@@ -223,6 +217,13 @@ $('#title').on('keyup', function() {
 // Efter varje tangenttryck uppdatera bodytexten i förhansgranskning
 $('#body').on('keyup', function () {
     let bodyVal = $('#body').val()
-    console.log(bodyVal)
     $('#previewBody').text(bodyVal)
 })
+
+
+if (window.location.href.indexOf("update") > -1) {
+    let titelVal = $('#title').val()
+    $('#previewTitle').text(titelVal)
+    let bodyVal = $('#body').val()
+    $('#previewBody').text(bodyVal)
+}

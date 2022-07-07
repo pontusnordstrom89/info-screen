@@ -16,7 +16,7 @@
       <h4 id="date"></h4>
     </div>
 
-    <nav class="col-4 nav d-block">
+    <nav class="col-4 nav d-block mt-5">
       {% if g.user %}
       <p>Inloggad som: {{ g.user['username'] }}</p>
       <a class="btn btn-primary" href="{{ url_for('blog.create') }}">Skapa post</a>
@@ -29,18 +29,24 @@
     </nav>
 
   </div>
-  {% if g.user %}
-  <p>Du är redan inloggad</p>
-  <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
-  {% else %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Log In">
-  </form>
-  {% endif %}
+  <div class="col-lg-4 m-auto mt-5">
+    {% if g.user %}
+    <p>Du är redan inloggad</p>
+    <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
+    {% else %}
+    <form method="post">
+      <div class="mb-3">
+        <label for="username" class="form-label">Användarnamn</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Lösenord</label>
+        <input type="password" class="form-control" name="password" id="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Logga in</button>
+    </form>
+    {% endif %}
+  </div>
 </div>
-</div>
+
 {% endblock %}

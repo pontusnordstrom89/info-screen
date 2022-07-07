@@ -14,8 +14,9 @@ bp = Blueprint('blog', __name__)
 def index():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, title, body, img_path, created, author_id, username'
+        'SELECT p.id, title, body, img_path, active, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
+        ' WHERE active = 1'
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('blog/index.html', posts=posts)
@@ -51,7 +52,7 @@ def create():
 
 def get_post(id, check_author=True):
     post = get_db().execute(
-        'SELECT p.id, title, body, created, author_id, username'
+        'SELECT p.id, title, body, img_path, active, created, author_id, username'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE p.id = ?',
         (id,)
@@ -70,12 +71,18 @@ def get_post(id, check_author=True):
 @login_required
 def update(id):
     post = get_post(id)
-
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
-        active = request.form.get['active']
-        print(active)
+        active = request.form.get('active-post')
+        
+        if active == None:
+            active = False
+            print("active is nothing")
+        else:
+            active = True
+            print("active is true")
+
         error = None
 
         if not title:
@@ -88,7 +95,7 @@ def update(id):
             db.execute(
                 'UPDATE post SET title = ?, body = ?, active = ?'
                 ' WHERE id = ?',
-                (title, body, id, active)
+                (title, body, active, id)
             )
             db.commit()
             return redirect(url_for('blog.overview'))

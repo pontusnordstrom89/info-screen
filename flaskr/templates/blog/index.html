@@ -12,34 +12,53 @@
         src="../../static/img/default/png/100/01d.png" alt="weather img">
       <h3 class="m-0" id="weather"></h3>
       {% if g.user %}
-      <p>Inloggad som: {{ g.user['username'] }}</p>
-      <a class="btn btn-primary" href="{{ url_for('blog.create') }}">Skapa post</a>
-      <a class="btn btn-primary" href="{{ url_for('blog.overview') }}">Översikt</a>
-      <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
+      <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Meny
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <p class="dropdown-item">Inloggad som: {{ g.user['username'] }}</p>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
+      
+            <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
+          </ul>
+        </li>
+      </div>
       {% endif %}
     </div>
-
   </div>
 
   <div class="col m-auto ">
 
 
-    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item active" data-bs-interval="10000">
           <img src="../../static/img/uploads/1656837488520.jpg" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>Spira Blommor</h5>
-            <p>Välkommen</p>
+          <div class="spira-carousel-text d-none d-md-block">
+            <div class="carousel-text-background">
+            <h1 class="spira-color p-3">Välkommen till Spira Blommor</h1>
+            </div>
           </div>
         </div>
         {% for post in posts %}
         <div class="carousel-item" data-bs-interval="10000">
           <img src="../../static/img/uploads/{{ post['img_path'] }}" class="d-block w-100" alt="...">
-          <div class="carousel-caption d-none d-md-block">
-            <h5>{{ post['title'] }}</h5>
-            <p>{{ post['body'] }}</p>
+          
+          <div class="spira-carousel-text d-none d-md-block">
+            <div class="carousel-text-background">
+            <h1>{{ post['title'] }}</h1>
+            <p class="fs-4">{{ post['body'] }}</p>
             <small>by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</small>
+            </div>
           </div>
         </div>
         {% endfor %}

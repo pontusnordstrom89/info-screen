@@ -1,26 +1,90 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>Uppdatera</h1>
+<h1>Uppdatera</h1>
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title"
-      value="{{ request.form['title'] or post['title'] }}" required>
-    <label for="body">Body</label>
-    <textarea name="body" id="body">{{ request.form['body'] or post['body'] }}</textarea>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="active" value="{{post['active']}}" id="active" {{ "checked" if 1 else "" }}>
-      <label class="form-check-label" for="active">
-        Aktiv om ifylld
-      </label>
+
+<div class="col m-auto row d-flex justify-content-between text-center spira-color border-bottom">
+  <div class="col-4"><a class="navbar-brand" href="#">
+      <img src="../../static/img/spira-logo-normal.png" alt="Spira logo" height="100">
+    </a></div>
+
+  <div class="col-4 text-center">
+    <h1 class="mt-5">Uppdatera</h1>
+    <h4 id="date"></h4>
+  </div>
+
+  <div class="col-4 mt-5">
+    {% if g.user %}
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Meny
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <p class="dropdown-item">Inloggad som: {{ g.user['username'] }}</p>
+        </li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
+
+        <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
+      </ul>
+      </li>
     </div>
-    <input type="submit" value="Spara">
-  </form>
-  <hr>
-  <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
-    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-  </form>
+    {% endif %}
+  </div>
+
+</div>
+<div class="container m-auto row">
+  <div class="col-lg-6">
+    <form method="post" enctype="multipart/form-data">
+      <div class="mb-3">
+        <label for="formFile" class="form-label">Uppladdning av ny bild ersätter befintlig</label>
+        <input class="form-control" type="file" id="formFile" name="filers" class="image">
+        <input id="imgName" name="imgName" hidden>
+      </div>
+      <div class="mb-3">
+        <label for="title" class="form-label">Titel</label>
+        <input type="text" class="form-control" name="title" id="title"
+          value="{{ request.form['title'] or post['title'] }}" required>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Text</label>
+        <textarea class="form-control" name="body" id="body"
+          rows="3">{{ request.form['body'] or post['body'] }}</textarea>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" name="active-post" value="{{post['active']}}" id="active-post"
+          {{'checked="checked"' if post['active'] else ""}}>
+        <label class="form-check-label" for="active-post">
+          Aktiv om ifylld
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary" id="submitForm">Publicera</button>
+    </form>
+    <hr>
+    <form action="{{ url_for('blog.delete', id=post['id']) }}" method="post">
+      <input class="btn btn-danger" type="submit" value="Radera" onclick="return confirm('Are you sure?');">
+    </form>
+  </div>
+
+  <div class="col-lg-6" id="post-preview">
+    <h3 class="spira-color text-center">Förhandsgranskning</h3>
+    <div class="carousel-item active border">
+      <img src="../../static/img/uploads/{{ request.form['img_path'] or post['img_path'] }}" class="d-block w-100" id="changedFile" alt="...">
+      <div class="carousel-caption d-none d-md-block" id="preview-background">
+        <h5 id="previewTitle"></h5>
+        <p id="previewBody"></p>
+      </div>
+    </div>
+
+  </div>
+</div>
 {% endblock %}

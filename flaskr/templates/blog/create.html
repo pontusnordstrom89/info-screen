@@ -9,26 +9,38 @@
 
 <div class="col m-auto row d-flex justify-content-between text-center spira-color border-bottom">
   <div class="col-4"><a class="navbar-brand" href="#">
-    <img src="../../static/img/spira-logo-normal.png" alt="Spira logo" height="100">
-  </a></div>
-  
+      <img src="../../static/img/spira-logo-normal.png" alt="Spira logo" height="100">
+    </a></div>
+
   <div class="col-4 text-center">
     <h1 class="mt-5">Skapa ett nytt inlägg</h1>
     <h4 id="date"></h4>
   </div>
-
-  <nav class="col-4 nav d-block">
+  <div class="col-4 mt-5">
     {% if g.user %}
-    <p>Inloggad som: {{ g.user['username'] }}</p>
-    <a class="btn btn-primary" href="{{ url_for('blog.create') }}">Skapa post</a>
-      <a class="btn btn-primary" href="{{ url_for('blog.overview') }}">Översikt</a>
-      <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
-    {% else %}
-    <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Registrera användare</a>
-    <a class="btn btn-success" href="{{ url_for('auth.login') }}">Logga In</a>
-    {% endif %}
-  </nav>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        Meny
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <p class="dropdown-item">Inloggad som: {{ g.user['username'] }}</p>
+        </li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
 
+        <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
+        <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
+      </ul>
+      </li>
+    </div>
+    {% endif %}
+  </div>
+  
 </div>
 
 
@@ -68,7 +80,8 @@
 
 
   <!-- Modal -->
-  <div class="modal fade" id="imageCropModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="imageCropModalLabel" aria-hidden="true">
+  <div class="modal fade" id="imageCropModal" data-bs-backdrop="static" tabindex="-1"
+    aria-labelledby="imageCropModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">

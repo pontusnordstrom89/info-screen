@@ -16,17 +16,30 @@
         <h4 id="date"></h4>
     </div>
 
-    <nav class="col-4 nav d-block">
+    <div class="col-4 mt-5">
         {% if g.user %}
-        <p>Inloggad som: {{ g.user['username'] }}</p>
-        <a class="btn btn-primary" href="{{ url_for('blog.create') }}">Skapa post</a>
-        <a class="btn btn-primary" href="{{ url_for('blog.overview') }}">Översikt</a>
-        <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
-        {% else %}
-        <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Registrera användare</a>
-        <a class="btn btn-success" href="{{ url_for('auth.login') }}">Logga In</a>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Meny
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    <p class="dropdown-item">Inloggad som: {{ g.user['username'] }}</p>
+                </li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
+    
+                <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
+            </ul>
+            </li>
+        </div>
         {% endif %}
-    </nav>
+    </div>
 
 </div>
 <div class="container row m-auto">

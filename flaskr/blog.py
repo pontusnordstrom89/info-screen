@@ -1,4 +1,5 @@
 
+import os
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -14,7 +15,7 @@ bp = Blueprint('blog', __name__)
 def index():
     db = get_db()
     posts = db.execute(
-        'SELECT p.id, title, body, img_path, active, created, author_id, username'
+        'SELECT p.id, title, body, img_path, active, created, author_id, username, first_name, last_name'
         ' FROM post p JOIN user u ON p.author_id = u.id'
         ' WHERE active = 1'
         ' ORDER BY created DESC'
@@ -74,6 +75,7 @@ def update(id):
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
+        new_img_path = request.form['imgName']
         active = request.form.get('active-post')
         
         if active == None:
@@ -88,14 +90,19 @@ def update(id):
         if not title:
             error = 'Title is required.'
 
+        if not new_img_path:
+            img_path = post['img_path']
+        else:
+            img_path = new_img_path
+
         if error is not None:
             flash(error)
         else:
             db = get_db()
             db.execute(
-                'UPDATE post SET title = ?, body = ?, active = ?'
+                'UPDATE post SET title = ?, body = ?, img_path = ?, active = ?'
                 ' WHERE id = ?',
-                (title, body, active, id)
+                (title, body, img_path, active, id)
             )
             db.commit()
             return redirect(url_for('blog.overview'))
@@ -106,7 +113,9 @@ def update(id):
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_post(id)
+    post = get_post(id)
+    os.remove(os.path.join(os.getcwd(), 
+        'flaskr/static/img/uploads', post['img_path']))
     db = get_db()
     db.execute('DELETE FROM post WHERE id = ?', (id,))
     db.commit()

@@ -15,24 +15,46 @@
       <h1 class="mt-5">Logga in</h1>
       <h4 id="date"></h4>
     </div>
-
-    <nav class="col-4 nav d-block mt-5">
+    <div class="col-4 mt-5">
       {% if g.user %}
-      <p>Inloggad som: {{ g.user['username'] }}</p>
-      <a class="btn btn-primary" href="{{ url_for('blog.create') }}">Skapa post</a>
-      <a class="btn btn-primary" href="{{ url_for('blog.overview') }}">Översikt</a>
-      <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
-      {% else %}
-      <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Registrera användare</a>
-      <a class="btn btn-success" href="{{ url_for('auth.login') }}">Logga In</a>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          Meny
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <p class="dropdown-item">Inloggad som: {{ g.user['username'] }}</p>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="{{ url_for('blog.index') }}">Startsida</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
+
+          <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
+        </ul>
+        </li>
+      </div>
       {% endif %}
-    </nav>
+    </div>
 
   </div>
   <div class="col-lg-4 m-auto mt-5">
     {% if g.user %}
-    <p>Du är redan inloggad</p>
+    <div class="text-center">
+    <p>Du är redan inloggad som: {{ g.user['username'] }}</p>
     <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
+    <hr>
+    <ul class="list-group">
+    <li class="list-group-item"><a href="{{ url_for('blog.index') }}">Startsida</a></li>
+    <li class="list-group-item"><a href="{{ url_for('blog.create') }}">Skapa post</a></li>
+    <li class="list-group-item"><a href="{{ url_for('blog.overview') }}">Översikt</a></li>
+    <li class="list-group-item"><a href="{{ url_for('auth.register') }}">Registrera användare</a></li>
+    </ul>
+    </div>
     {% else %}
     <form method="post">
       <div class="mb-3">
@@ -45,7 +67,10 @@
       </div>
       <button type="submit" class="btn btn-primary">Logga in</button>
     </form>
+    <small>Inget konto? Kontakta IT så hjälper vi dig.</small>
     {% endif %}
+
+    
   </div>
 </div>
 

@@ -3,9 +3,14 @@
     src: url(font/Roboto-Bold.ttf);
 }
 
+@font-face {
+    font-family: welcomeText;
+    src: url(font/AguafinaScript-Regular.ttf);
+}
+
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    overflow: hidden;
+    min-height: 100vh;
 }
 
 /* Ensure the size of the image fit the container perfectly */
@@ -29,6 +34,12 @@ img {
 
 }
 
+.welcome-slide {
+    font-size: 80px;
+    color: #3d6638;
+    font-family: welcomeText;
+}
+
 .preview {
     overflow: hidden;
     width: 250px;
@@ -39,13 +50,18 @@ img {
 
 #full-screen {
     position: relative;
+    overflow: hidden;
+    min-height: 100vh;
 }
 
 #video-frame {
     position: absolute;
+    min-height: 100vh;
     top: 0%;
+    bottom: 0%;
     left: 0%;
     display: none;
+    z-index: 9999;
 }
 
 #preview-background {
@@ -71,15 +87,29 @@ img {
 .spira-carousel-text {
     position: absolute;
     right: 0%;
-    bottom: 0%;
+    top: 50%;
     left: 0%;
-    color: #fff;
     text-align: center;
-    font-family: carouselText;
-    text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.2),
-        0px -5px 35px rgba(255, 255, 255, 0.3);
 }
 
+.spira-carousel-titel {
+    font-family: carouselText;
+    color: #fff;
+    font-size: 80px;
+    text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.4),
+        0px -5px 35px rgba(255, 255, 255, 0.5);
+}
+
+.spira-carousel-body {
+    font-family: carouselText;
+    color: #fff;
+    font-size: 24px;
+    text-shadow: 2px 8px 6px rgba(0, 0, 0, 0.4),
+        0px -5px 35px rgba(255, 255, 255, 0.5);
+}
+
+/*
 .carousel-text-background {
     background-color: rgba(255, 255, 255, 0.5);
 }
+*/

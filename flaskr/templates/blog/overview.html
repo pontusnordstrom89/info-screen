@@ -30,9 +30,10 @@
                 <li>
                     <hr class="dropdown-divider">
                 </li>
+                <li><a class="dropdown-item" href="{{ url_for('blog.index') }}">Startsida</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
-    
+
                 <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
                 <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
             </ul>
@@ -42,17 +43,17 @@
     </div>
 
 </div>
-<div class="container row m-auto">
+<div class="container row m-auto mt-5">
     {% for post in posts %}
-    <div class="col-lg-4">
-        <div class="carousel-item active border border-5 {{ 'border-success' if post['active'] else 'border-danger' }}">
-            <img src="../../static/img/uploads/{{ post['img_path'] }}" class="d-block w-100" id="changedFile" alt="...">
-            <div class="carousel-caption d-none d-md-block">
-                <h5>{{ post['title'] }}</h5>
-                <p>{{ post['body'] }}</p>
-                <small>by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</small>
-                <a class="btn btn-success btn-sm" href="{{ url_for('blog.update', id=post['id']) }}">Ändra</a>
-            </div>
+    <div class="col-lg-4 mt-2 border border-5 {{ 'border-success' if post['active'] else 'border-danger' }}">
+        <div>
+            <img src="../../static/img/uploads/{{ post['img_path'] }}" class="d-block w-100 p-2" id="changedFile" alt="...">
+        </div>
+        <div class="text-center p-2">
+            <h4>{{ post['title'] }}</h4>
+            <p>{{ post['body'] }}</p>
+            <small>by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</small><br>
+            <a class="btn btn-success btn-sm" href="{{ url_for('blog.update', id=post['id']) }}">Ändra</a>
         </div>
     </div>
 

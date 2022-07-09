@@ -2,7 +2,7 @@
 
 {% block content %}
 <div id="full-screen">
-  <div class="col m-auto row d-flex justify-content-between text-center spira-color">
+  <div class="col m-auto row d-flex justify-content-between text-center spira-color mt-5">
     <div class="col-4"><img class="img-fluid" src="../../static/img/spira-logo-normal.png" alt="Spira logo"></div>
     <div class="col-4 text-center">
       <h1 class="mt-5" id="clock"></h1>
@@ -13,51 +13,51 @@
       <h3 class="m-0" id="weather"></h3>
       {% if g.user %}
       <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Meny
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <p class="dropdown-item">Inloggad som: {{ g.user['username'] }}</p>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
-      
-            <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
-            <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
-          </ul>
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          Meny
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <p class="dropdown-item">Inloggad som: {{ g.user['username'] }}</p>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="{{ url_for('blog.index') }}">Startsida</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
+
+          <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
+        </ul>
         </li>
       </div>
       {% endif %}
     </div>
   </div>
-
-  <div class="col m-auto ">
+<hr class="mt-5">
+  <div class="col m-auto mt-5">
 
 
     <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-bs-ride="carousel">
       <div class="carousel-inner">
-        <div class="carousel-item active" data-bs-interval="10000">
-          <img src="../../static/img/uploads/1656837488520.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-item active" data-bs-interval="20000">
+          <img src="../../static/img/uploads/startscreen.jpg" class="d-block w-100" alt="...">
           <div class="spira-carousel-text d-none d-md-block">
-            <div class="carousel-text-background">
-            <h1 class="spira-color p-3">Välkommen till Spira Blommor</h1>
-            </div>
+
+            <h1 class="spira-carousel-titel text-uppercase">Welcome to Spira</h1>
+
           </div>
         </div>
         {% for post in posts %}
-        <div class="carousel-item" data-bs-interval="10000">
+        <div class="carousel-item" data-bs-interval="20000">
           <img src="../../static/img/uploads/{{ post['img_path'] }}" class="d-block w-100" alt="...">
-          
+
           <div class="spira-carousel-text d-none d-md-block">
-            <div class="carousel-text-background">
-            <h1>{{ post['title'] }}</h1>
-            <p class="fs-4">{{ post['body'] }}</p>
-            <small>by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</small>
+            <h1 class="spira-carousel-titel text-uppercase">{{ post['title'] }}</h1>
+            <div class="col-8 m-auto">
+              <p class="spira-carousel-body text-uppercase">{{ post['body'] }}</p>
             </div>
           </div>
         </div>
@@ -65,13 +65,59 @@
 
       </div>
     </div>
-
-
-
-
   </div>
-  <div class="col m-auto bg-primary align-self-end">
-    Rumsbokning
+
+
+  <div class="col m-auto mt-5">
+    <div class="card-group">
+      <div class="card">
+        <img src="../../static/img/branding/spira.png" class="card-img-top" alt="Spira">
+        <div class="card-body">
+          <h5 class="card-title">Spira</h5>
+          <p class="card-text">
+          <p>Spira is one of Swedens largest wholesaler of flowers and green plants.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill="none" stroke="#000" stroke-width="1.01"
+                d="M6.189,13.611C8.134,15.525 11.097,18.239 13.867,18.257C16.47,18.275 18.2,16.241 18.2,16.241L14.509,12.551L11.539,13.639L6.189,8.29L7.313,5.355L3.76,1.8C3.76,1.8 1.732,3.537 1.7,6.092C1.667,8.809 4.347,11.738 6.189,13.611">
+              </path>
+            </svg>+46 (0)406 808 600</small>
+        </div>
+      </div>
+      <div class="card">
+        <img src="../../static/img/branding/onefloragroup.png" class="card-img-top" alt="One Flora Group">
+        <div class="card-body">
+          <h5 class="card-title">One Flora Group</h5>
+          <p class="card-text">One Flora Group is one of the largest floriculture groups in the world. Together with our
+            employees, companies, growers,
+            customers and partners, we achieve sustainable growth in the wonderful world of flowers and plants.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill="none" stroke="#000" stroke-width="1.01"
+                d="M6.189,13.611C8.134,15.525 11.097,18.239 13.867,18.257C16.47,18.275 18.2,16.241 18.2,16.241L14.509,12.551L11.539,13.639L6.189,8.29L7.313,5.355L3.76,1.8C3.76,1.8 1.732,3.537 1.7,6.092C1.667,8.809 4.347,11.738 6.189,13.611">
+              </path>
+            </svg>+31 (0)850 406 800</small>
+        </div>
+      </div>
+      <div class="card">
+        <img src="../../static/img/branding/bloominess.png" class="card-img-top" alt="Bloominess">
+        <div class="card-body">
+          <h5 class="card-title">Bloominess</h5>
+          <p class="card-text">Bloominess was founded in the Dutch town of Kudelstaart in 1996. Since then, the company
+            has become a leading designer
+            and supplier of flower and plant arrangements to retail florist chains.</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted"><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill="none" stroke="#000" stroke-width="1.01"
+                d="M6.189,13.611C8.134,15.525 11.097,18.239 13.867,18.257C16.47,18.275 18.2,16.241 18.2,16.241L14.509,12.551L11.539,13.639L6.189,8.29L7.313,5.355L3.76,1.8C3.76,1.8 1.732,3.537 1.7,6.092C1.667,8.809 4.347,11.738 6.189,13.611">
+              </path>
+            </svg>+31 (0)297 380 380</small>
+        </div>
+      </div>
+    </div>
   </div>
 
 

@@ -5,11 +5,18 @@ $(document).ready(function () {
     startTime()
     getWeather();
     getDate();
-    //playMovie();
 
-    
+    console.log(screen.width)
+    if (screen.width < 1100) {
+        playMovie();
+    }
+    postUpdater();
 });
 
+function postUpdater() {
+    //Dum lösning för att hämta nya inlägg, 10.800.000ms == 3 timmar
+    setTimeout("location.reload(true);", 10800000);
+}
 
 /**
  * Funktion för klocka
@@ -189,7 +196,7 @@ $("#crop").click(function () {
         $('#imgName').val(`${today}.jpg`)
         console.log(formData)
         // Use `jQuery.ajax` method for example
-        $.ajax('upload-file', {
+        $.ajax('http://127.0.0.1:5000/upload-file', {
             method: 'POST',
             data: formData,
             processData: false,
@@ -209,14 +216,30 @@ $("#crop").click(function () {
 
 // Efter varje tangenttryck uppdatera titeltexten i förhansgranskning
 $('#title').on('keyup', function() {
-    let titelVal = $('#title').val()
-    $('#previewTitle').text(titelVal)
+    let titleVal = $('#title').val()
+    $('#titleCount').text(`${titleVal.length}/20`)
+    if (titleVal.length > 20) {
+        $('#title').addClass('is-invalid');
+        $('#titleFeedback').text('Titeln är för lång')
+    } else {
+        $('#title').removeClass('is-invalid');
+        $('#titleFeedback').text('')
+    }
+    $('#previewTitle').text(titleVal)
 })
 
 
 // Efter varje tangenttryck uppdatera bodytexten i förhansgranskning
 $('#body').on('keyup', function () {
     let bodyVal = $('#body').val()
+    $('#bodyCount').text(`${bodyVal.length}/300`)
+    if (bodyVal.length > 300) {
+        $('#body').addClass('is-invalid');
+        $('#bodyFeedback').text('Texten är för lång')
+    } else {
+        $('#body').removeClass('is-invalid');
+        $('#bodyFeedback').text('')
+    }
     $('#previewBody').text(bodyVal)
 })
 

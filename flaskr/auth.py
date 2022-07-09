@@ -10,11 +10,23 @@ from flaskr.db import get_db
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+
+        return view(**kwargs)
+
+    return wrapped_view
 
 @bp.route('/register', methods=('GET', 'POST'))
+@login_required
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        first_name = request.form['fname']
+        last_name = request.form['lname']
         password = request.form['password']
         db = get_db()
         error = None
@@ -27,8 +39,8 @@ def register():
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (username, password) VALUES (?, ?)",
-                    (username, generate_password_hash(password)),
+                    "INSERT INTO user (username, first_name, last_name, password) VALUES (?, ?, ?, ?)",
+                    (username, first_name, last_name, generate_password_hash(password)),
                 )
                 db.commit()
             except db.IntegrityError:
@@ -44,10 +56,30 @@ def register():
 
 @bp.route('/login', methods=('GET', 'POST'))
 def login():
+    db = get_db()
+    try:
+        adminAccount = db.execute(
+            'SELECT * FROM user WHERE username = ?', ('infoAdmin',)
+        ).fetchone()
+
+        if not adminAccount:
+            db.execute(
+                "INSERT INTO user (username, first_name, last_name, password) VALUES (?, ?, ?, ?)",
+                ('infoAdmin', 'Info', 'Admin',
+                 generate_password_hash('admin')),
+            )
+            db.commit()
+        else:
+            print('admin exists')
+    except:
+        print('Something went wrong')
+
+
+
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        db = get_db()
+        
         error = None
         user = db.execute(
             'SELECT * FROM user WHERE username = ?', (username,)
@@ -83,12 +115,4 @@ def logout():
     session.clear()
     return redirect(url_for('index'))
 
-def login_required(view):
-    @functools.wraps(view)
-    def wrapped_view(**kwargs):
-        if g.user is None:
-            return redirect(url_for('auth.login'))
 
-        return view(**kwargs)
-
-    return wrapped_view

@@ -73,7 +73,5 @@ def create_app(test_config=None):
                 return resp
 
         return 'Something'
-        
-
 
     return app

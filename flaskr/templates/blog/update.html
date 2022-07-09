@@ -30,9 +30,10 @@
         <li>
           <hr class="dropdown-divider">
         </li>
+        <li><a class="dropdown-item" href="{{ url_for('blog.index') }}">Startsida</a></li>
         <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
         <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
-
+  
         <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
         <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
       </ul>
@@ -43,7 +44,10 @@
 
 </div>
 <div class="container m-auto row">
-  <div class="col-lg-6">
+  
+  <a href="{{ url_for('blog.overview') }}">⬅️ Tillbaka till översikt</a>
+  
+  <div class="col-lg-6 mt-5">
     <form method="post" enctype="multipart/form-data">
       <div class="mb-3">
         <label for="formFile" class="form-label">Uppladdning av ny bild ersätter befintlig</label>
@@ -75,7 +79,7 @@
     </form>
   </div>
 
-  <div class="col-lg-6" id="post-preview">
+  <div class="col-lg-6 mt-5" id="post-preview">
     <h3 class="spira-color text-center">Förhandsgranskning</h3>
     <div class="carousel-item active border">
       <img src="../../static/img/uploads/{{ request.form['img_path'] or post['img_path'] }}" class="d-block w-100" id="changedFile" alt="...">
@@ -86,5 +90,36 @@
     </div>
 
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="imageCropModal" data-bs-backdrop="static" tabindex="-1"
+    aria-labelledby="imageCropModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageCropModalLabel">Beskär bild</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="img-container">
+            <div class="row">
+              <div class="col-md-8">
+                <!--  default image where we will set the src via jquery-->
+                <img id="image">
+              </div>
+              <div class="col-md-4">
+                <div class="preview"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Stäng</button>
+          <button type="button" class="btn btn-primary" id="crop" data-bs-dismiss="modal">Spara ändringar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 {% endblock %}

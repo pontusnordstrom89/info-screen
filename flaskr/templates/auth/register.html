@@ -1,44 +1,74 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Register{% endblock %}</h1>
+<h1>{% block title %}Register{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 <div class="container">
-<div class="col m-auto row d-flex justify-content-between text-center spira-color border-bottom">
-  <div class="col-4"><a class="navbar-brand" href="#">
-    <img src="../../static/img/spira-logo-normal.png" alt="Spira logo" height="100">
-  </a></div>
-  
-  <div class="col-4 text-center">
-    <h1 class="mt-5">Registrera konto</h1>
-    <h4 id="date"></h4>
+  <div class="col m-auto row d-flex justify-content-between text-center spira-color border-bottom">
+    <div class="col-4"><a class="navbar-brand" href="#">
+        <img src="../../static/img/spira-logo-normal.png" alt="Spira logo" height="100">
+      </a></div>
+
+    <div class="col-4 text-center">
+      <h1 class="mt-5">Registrera konto</h1>
+      <h4 id="date"></h4>
+    </div>
+
+    <div class="col-4 mt-5">
+      {% if g.user %}
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+          data-bs-toggle="dropdown" aria-expanded="false">
+          Meny
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <p class="dropdown-item">Inloggad som: {{ g.user['username'] }}</p>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="{{ url_for('blog.index') }}">Startsida</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
+
+          <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
+          <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
+        </ul>
+        </li>
+      </div>
+      {% endif %}
+    </div>
+
   </div>
-
-  <nav class="col-4 nav d-block">
+  <div class="col-lg-4 m-auto mt-5">
     {% if g.user %}
-    <p>Inloggad som: {{ g.user['username'] }}</p>
-    <a class="btn btn-primary" href="{{ url_for('blog.create') }}">Skapa post</a>
-      <a class="btn btn-primary" href="{{ url_for('blog.overview') }}">Översikt</a>
-      <a class="btn btn-danger" href="{{ url_for('auth.logout') }}">Logga ut</a>
-    {% else %}
-    <a class="btn btn-primary" href="{{ url_for('auth.register') }}">Registrera användare</a>
-    <a class="btn btn-success" href="{{ url_for('auth.login') }}">Logga In</a>
+    <p>Du är just nu inloggad som: {{ g.user['username'] }}</p>
     {% endif %}
-  </nav>
-
-</div>
-{% if g.user %}
-<p>Inloggad som: {{ g.user['username'] }}</p>
-{% endif %}
-  <form method="post">
-    <label for="username">Username</label>
-    <input name="username" id="username" required>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Register">
-  </form>
+    <div class="border p-3">
+    <p>Fyll i uppgifterna för att registrera en ny användare</p>
+    <form method="post">
+      <div class="mb-3">
+        <label for="username" class="form-label">Användarnamn</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="mb-3">
+        <label for="fname" class="form-label">Förnamn</label>
+        <input type="text" class="form-control" id="fname" name="fname" required>
+      </div>
+      <div class="mb-3">
+        <label for="lname" class="form-label">Efternamn</label>
+        <input type="text" class="form-control" id="lname" name="lname" required>
+      </div>
+      <div class="mb-3">
+        <label for="exampleInputPassword1" class="form-label">Lösenord</label>
+        <input type="password" class="form-control" name="password" id="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Registrera</button>
+    </form>
+    </div>
   </div>
 </div>
 {% endblock %}

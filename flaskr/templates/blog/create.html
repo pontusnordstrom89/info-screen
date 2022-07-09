@@ -30,9 +30,10 @@
         <li>
           <hr class="dropdown-divider">
         </li>
+        <li><a class="dropdown-item" href="{{ url_for('blog.index') }}">Startsida</a></li>
         <li><a class="dropdown-item" href="{{ url_for('blog.create') }}">Skapa post</a></li>
         <li><a class="dropdown-item" href="{{ url_for('blog.overview') }}">Översikt</a></li>
-
+  
         <li><a class="dropdown-item" href="{{ url_for('auth.register') }}">Registrera användare</a></li>
         <li><a class="dropdown-item" href="{{ url_for('auth.logout') }}">Logga ut</a></li>
       </ul>
@@ -54,12 +55,14 @@
         <input id="imgName" name="imgName" hidden>
       </div>
       <div class="mb-3">
-        <label for="title" class="form-label">Titel</label>
-        <input type="text" class="form-control" name="title" id="title">
+        <label for="title" class="form-label">Titel <span id="titleCount"></span></label>
+        <input type="text" class="form-control" name="title" id="title" aria-describedby="titleFeedback">
+        <div id="titleFeedback" class="invalid-feedback"></div>
       </div>
       <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Text</label>
-        <textarea class="form-control" name="body" id="body" rows="3"></textarea>
+        <label for="exampleFormControlTextarea1" class="form-label">Text <span id="bodyCount"></span></label>
+        <textarea class="form-control" name="body" id="body" rows="6" aria-describedby="bodyFeedback"></textarea>
+        <div id="bodyFeedback" class="invalid-feedback"></div>
       </div>
       <button type="submit" class="btn btn-primary" id="submitForm">Publicera</button>
     </form>
@@ -69,7 +72,7 @@
     <h3 class="spira-color text-center">Förhandsgranskning</h3>
     <div class="carousel-item active border">
       <img src="..." class="d-block w-100" id="changedFile" alt="...">
-      <div class="carousel-caption d-none d-md-block" id="preview-background">
+      <div class="spira-carousel-text d-none d-md-block" id="preview-background">
         <h5 id="previewTitle"></h5>
         <p id="previewBody"></p>
       </div>
